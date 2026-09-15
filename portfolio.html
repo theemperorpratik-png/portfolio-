@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emperor Sakar — Full-Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1013;
+    --bg-panel:#15181D;
+    --bg-panel-hover:#1B1F26;
+    --text:#ECE7DA;
+    --muted:#8C919B;
+    --muted-2:#5C616B;
+    --gold:#E3B341;
+    --teal:#4FD1C5;
+    --border:#24282F;
+    --radius:3px;
+    --sans: 'Sora', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+  a{color:inherit;}
+  ::selection{background:var(--gold); color:#0E1013;}
+
+  .wrap{max-width:880px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:10;
+    background:rgba(14,16,19,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:60px;
+  }
+  .brand{
+    font-family:var(--mono); font-size:14px; color:var(--gold);
+    text-decoration:none; letter-spacing:0.02em;
+  }
+  .navlinks{display:flex; gap:26px; font-size:14px;}
+  .navlinks a{text-decoration:none; color:var(--muted); transition:color .15s;}
+  .navlinks a:hover{color:var(--text);}
+  @media (max-width:560px){ .navlinks{gap:16px; font-size:13px;} }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:96px 0 72px;}
+  .prompt{
+    font-family:var(--mono); font-size:14px; color:var(--teal);
+    margin-bottom:18px; display:flex; align-items:center; gap:10px;
+  }
+  .prompt .cursor{
+    display:inline-block; width:8px; height:16px; background:var(--teal);
+    animation:blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{opacity:0;} }
+  h1.name{
+    font-size:clamp(44px, 8vw, 76px);
+    font-weight:800;
+    line-height:1.02;
+    margin:0 0 20px;
+    letter-spacing:-0.01em;
+  }
+  .hero p.lede{
+    max-width:60ch;
+    color:var(--muted);
+    font-size:18px;
+    margin:0 0 32px;
+  }
+  .hero p.lede strong{color:var(--text); font-weight:600;}
+  .hero-links{display:flex; flex-wrap:wrap; gap:14px;}
+  .btn{
+    font-family:var(--mono); font-size:13.5px;
+    padding:11px 18px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    border:1px solid var(--border);
+    color:var(--text);
+    transition:border-color .15s, background .15s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn:hover{border-color:var(--gold); background:var(--bg-panel);}
+  .btn.primary{background:var(--gold); color:#14110A; border-color:var(--gold); font-weight:600;}
+  .btn.primary:hover{background:#eec664;}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:64px 0; border-top:1px solid var(--border);}
+  .section-head{
+    display:flex; align-items:baseline; gap:12px; margin-bottom:34px;
+  }
+  .section-num{font-family:var(--mono); color:var(--muted-2); font-size:14px;}
+  h2{font-size:26px; margin:0; font-weight:700;}
+
+  /* ---------- STACK ---------- */
+  .stack-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  @media (max-width:640px){ .stack-grid{grid-template-columns:1fr;} }
+  .stack-col h3{
+    font-size:13px; text-transform:none; color:var(--muted);
+    font-family:var(--mono); font-weight:500; margin:0 0 14px;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:var(--mono); font-size:13px;
+    padding:7px 12px; border:1px solid var(--border); border-radius:var(--radius);
+    color:var(--text); background:var(--bg-panel);
+  }
+  .chip.core{border-color:var(--gold); color:var(--gold);}
+  .chip.familiar{border-color:var(--teal); color:var(--teal);}
+
+  /* ---------- PROJECTS ---------- */
+  .proj{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px 24px;
+    margin-bottom:14px;
+    background:var(--bg-panel);
+    transition:border-color .15s, transform .15s;
+  }
+  .proj:hover{border-color:var(--muted-2);}
+  .proj-top{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;
+  }
+  .proj-name{
+    font-family:var(--mono); font-size:16px; font-weight:600; color:var(--text);
+    text-decoration:none;
+  }
+  .proj-name:hover{color:var(--gold);}
+  .proj-lang{font-family:var(--mono); font-size:12px; color:var(--muted-2);}
+  .proj-desc{color:var(--muted); font-size:14.5px; margin:10px 0 0; max-width:65ch;}
+
+  /* ---------- GITHUB ---------- */
+  .gh-panel{
+    border:1px solid var(--border); border-radius:var(--radius);
+    padding:28px; background:var(--bg-panel);
+  }
+  .gh-panel img{max-width:100%; display:block; border-radius:var(--radius);}
+  .gh-stats-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;}
+  @media (max-width:640px){ .gh-stats-grid{grid-template-columns:1fr;} }
+
+  /* ---------- CONTACT ---------- */
+  .contact-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:20px;}
+
+  footer{
+    border-top:1px solid var(--border);
+    padding:36px 0;
+    font-family:var(--mono); font-size:12.5px; color:var(--muted-2);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a class="brand" href="#top">emperor_sakar</a>
+    <div class="navlinks">
+      <a href="#stack">Stack</a>
+      <a href="#projects">Projects</a>
+      <a href="#github">GitHub</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="prompt">$ whoami<span class="cursor"></span></div>
+    <h1 class="name">Emperor Sakar</h1>
+    <p class="lede">
+      Full-stack developer building with the <strong>MERN stack</strong> and <strong>Next.js</strong> —
+      shipping practical, fast web apps, currently helping small businesses get online through
+      a web agency I'm building with a friend.
+    </p>
+    <div class="hero-links">
+      <a class="btn primary" href="https://github.com/theemperorpratik-png" target="_blank" rel="noopener">View GitHub ↗</a>
+      <a class="btn" href="#projects">See projects</a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <section id="stack">
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">01</span><h2>Stack</h2></div>
+      <div class="stack-grid">
+        <div class="stack-col">
+          <h3>// core — build and ship with these daily</h3>
+          <div class="chip-row">
+            <span class="chip core">Node.js</span>
+            <span class="chip core">Express</span>
+            <span class="chip core">MongoDB</span>
+            <span class="chip core">JavaScript</span>
+            <span class="chip core">HTML / CSS</span>
+          </div>
+        </div>
+        <div class="stack-col">
+          <h3>// working knowledge — comfortable reading and building with</h3>
+          <div class="chip-row">
+            <span class="chip familiar">React</span>
+            <span class="chip familiar">Next.js</span>
+            <span class="chip familiar">TypeScript</span>
+            <span class="chip familiar">SQL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">02</span><h2>Projects</h2></div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <a class="proj-name" href="https://github.com/theemperorpratik-png/Blackjack-Game" target="_blank" rel="noopener">Blackjack-Game →</a>
+          <span class="proj-lang">JavaScript</span>
+        </div>
+        <p class="proj-desc">A simple, interactive Blackjack game built with HTML, CSS, and JS.</p>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <a class="proj-name" href="https://github.com/theemperorpratik-png/Password_Generator" target="_blank" rel="noopener">Password_Generator →</a>
+          <span class="proj-lang">JavaScript</span>
+        </div>
+        <p class="proj-desc">Random secure password generator with adjustable length, symbol and number toggles, and one-click copy.</p>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <a class="proj-name" href="https://github.com/theemperorpratik-png/Endless-Runner" target="_blank" rel="noopener">Endless-Runner →</a>
+          <span class="proj-lang">JavaScript</span>
+        </div>
+        <p class="proj-desc">A browser-based endless runner game.</p>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <a class="proj-name" href="https://github.com/theemperorpratik-png/Save-Extension--Lead-Tracker" target="_blank" rel="noopener">Save-Extension — Lead Tracker →</a>
+          <span class="proj-lang">JavaScript</span>
+        </div>
+        <p class="proj-desc">A lightweight Chrome extension for instant tracking of leads (sites) across any task.</p>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <a class="proj-name" href="https://github.com/theemperorpratik-png/INVARA" target="_blank" rel="noopener">INVARA →</a>
+          <span class="proj-lang">CSS</span>
+        </div>
+        <p class="proj-desc">An experimental, generative electro-art site.</p>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <a class="proj-name" href="https://github.com/theemperorpratik-png/Esp32-Robot-Car" target="_blank" rel="noopener">Esp32-Robot-Car →</a>
+          <span class="proj-lang">C++</span>
+        </div>
+        <p class="proj-desc">Firmware for an ESP32-controlled robot car.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="github">
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">03</span><h2>GitHub activity</h2></div>
+      <div class="gh-panel">
+        <div class="gh-stats-grid">
+          <img src="https://github-readme-stats.vercel.app/api?username=theemperorpratik-png&show_icons=true&theme=dark&bg_color=15181D&title_color=E3B341&icon_color=4FD1C5&text_color=ECE7DA&border_color=24282F&hide_border=false" alt="GitHub stats for theemperorpratik-png">
+          <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=theemperorpratik-png&layout=compact&theme=dark&bg_color=15181D&title_color=E3B341&text_color=ECE7DA&border_color=24282F&hide_border=false" alt="Top languages for theemperorpratik-png">
+        </div>
+        <p style="margin-top:16px; color:var(--muted); font-size:14px;">
+          Live stats pulled from GitHub — updates automatically as new commits land.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">04</span><h2>Contact</h2></div>
+      <p style="color:var(--muted); max-width:60ch;">
+        Open to freelance and full-stack roles — including small business projects through my agency.
+        Reach out below.
+      </p>
+      <div class="contact-row">
+        <a class="btn" href="mailto:your@email.com">Email →</a>
+        <a class="btn" href="https://github.com/theemperorpratik-png" target="_blank" rel="noopener">GitHub →</a>
+        <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Emperor Sakar</span>
+  <span>Built with HTML, CSS, JS</span>
+</footer>
+
+</body>
+</html>
